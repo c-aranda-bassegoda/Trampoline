@@ -8,8 +8,8 @@ public class Mesh : MonoBehaviour
 {
     UnityEngine.Mesh mesh;
     Vertex[] vertices;
-    List<Vertex> corners = new List<Vertex>();
-    List<Vertex> boundry = new List<Vertex>();
+    List<int> corners = new List<int>();
+    List<int> boundry = new List<int>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,54 +21,75 @@ public class Mesh : MonoBehaviour
             vertices[i] = new Vertex(5, transform.TransformPoint(VertexList[i]));
         }
 
-        Vector3 dims = mesh.bounds.size;
-        int x = (int)dims.x;
-        int y = (int)dims.z;
+        defineBoundry();
+        defineCorners();
 
-        corners.Add(vertices[0]);
-        corners.Add(vertices[x]);
-        corners.Add(vertices[x*y + x]);
-        corners.Add(vertices[x*y + x + y]);
-
-        for (int i = 0; i < y; i++)
-        {
-            for (int j = 0; j < x; j++)
-            {
-                if (i == 0)
-                {
-                    boundry.Add(vertices[j]);
-                }
-                else if (i == y - 1)
-                {
-                    boundry.Add(vertices[x * y + x + j]);
-                }
-                else if (j == 0 || j == x - 1)
-                {
-                    boundry.Add(vertices[i * x + j]);
-                }
-            }
-        }
+        fixBoundry();
     }
 
     public Vertex[] getVertices()
     {
         return vertices;
     }
-
-    public List<Vertex> getCorners()
+    public List<int> getCornerIdx()
     {
         return corners;
     }
-    public List<Vertex> getBoundry()
+    public List<int> getBoundryIdx()
     {
         return boundry;
     }
+    public void defineCorners()
+    {
+        Vector3 dims = mesh.bounds.size;
+        int x = (int)dims.x;
+        int y = (int)dims.z;
+
+        corners.Add(0);
+        corners.Add(x);
+        corners.Add(x * y + x);
+        corners.Add(x * y + x + y);
+    }
+    public void defineBoundry()
+    {
+        Vector3 dims = mesh.bounds.size;
+        int x = (int)dims.x;
+        int y = (int)dims.z;
+
+        for (int i = 0; i <= y; i++)
+        {
+            for (int j = 0; j <= x; j++)
+            {
+                if (i == 0)
+                {
+                    boundry.Add(j);
+                }
+                else if (i == y)
+                {
+                    boundry.Add(x * y + x + j);
+                }
+                else if (j == 0 || j == x)
+                {
+                    boundry.Add(i * (x + 1) + j);
+                }
+            }
+        }
+    }
+
+    public void fixBoundry()
+    {
+        for (int i = 0; i < boundry.Count; i++)
+        {
+            vertices[boundry[i]].setFixed(true);
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        for (int i = 0; i < vertices.Length; i++)
+        for (int i = 0; i < boundry.Count; i++)
         {
-            Gizmos.DrawSphere(vertices[i].position, 1);
+            Gizmos.DrawSphere(vertices[boundry[i]].position, 0.2f);
         }
     }
 
