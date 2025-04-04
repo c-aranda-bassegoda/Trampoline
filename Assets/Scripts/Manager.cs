@@ -6,7 +6,6 @@ using UnityEngine;
 // we tell the mesh to take in new vertices 
 
 // ToDo:
-// look into spring systems: shear, bending, structural springs
 public class Manager : MonoBehaviour
 {
     //Mesh trampoline;

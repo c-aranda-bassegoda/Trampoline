@@ -6,12 +6,13 @@ using System.Collections;
 
 public class Mesh : MonoBehaviour
 {
-    UnityEngine.Mesh mesh;
-    Vertex[] vertices;
-    List<int> corners = new List<int>();
-    List<int> boundry = new List<int>();
+    protected UnityEngine.Mesh mesh;
+    protected Vertex[] vertices;
+    protected List<int> corners = new List<int>();
+    protected List<int> boundry = new List<int>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Awake()
     {
         mesh = GetComponent<MeshFilter>().mesh;
         List<Vector3> VertexList = new List<Vector3>(GetComponent<MeshFilter>().sharedMesh.vertices);
@@ -25,6 +26,9 @@ public class Mesh : MonoBehaviour
         defineCorners();
 
         fixBoundry();
+    }
+    void Start()
+    {
     }
 
     public Vertex[] getVertices()
@@ -80,7 +84,7 @@ public class Mesh : MonoBehaviour
     {
         for (int i = 0; i < boundry.Count; i++)
         {
-            vertices[boundry[i]].setFixed(true);
+            vertices[boundry[i]].isFixed = true;
         }
     }
 

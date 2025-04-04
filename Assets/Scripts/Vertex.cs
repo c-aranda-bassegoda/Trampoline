@@ -4,7 +4,7 @@ public class Vertex : MonoBehaviour
 {
     public int mass;
     public Vector3 position;
-    public bool _isFixed;
+    bool _isFixed;
     public bool isFixed { get => _isFixed; set { _isFixed = value; } }
 
     Vector3 _velocity = Vector3.zero;
