@@ -15,7 +15,7 @@ using System.Collections;
 public class Manager : MonoBehaviour
 {
     private Vector3 gravity =  new Vector3(0f, -9.81f, 0f);
-    private float damping_coef = 5f;
+    private float damping_coef = 10f;
 
     // Debug
     float time = 0f;
@@ -67,6 +67,10 @@ public class Manager : MonoBehaviour
     }
     public void applySpring(Vertex vert)
     {
+        if (vert == null)
+        {
+            Debug.Log("vert is null");
+        }
         foreach (Spring spring in vert.adjSprings)
         {
             Vector3 value = spring.v1.position - spring.v2.position;

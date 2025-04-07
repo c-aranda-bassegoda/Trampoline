@@ -22,6 +22,8 @@ public class Trampoline : Mesh
         shearSprings = new List<Spring>();
 
         createSprings();
+        Collider collider = GetComponent<Collider>();
+
 
     }
 
@@ -42,6 +44,10 @@ public class Trampoline : Mesh
                 {
                     spring = new Spring(1, stiffness, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + 1]);
                     structuralSprings.Add(spring); // for debuging
+                    if (vertices[i * (y + 1) + j] == null)
+                    {
+                        Debug.Log("vertex is null");
+                    }
                     vertices[i * (y + 1) + j].addSpring(spring);
                     vertices[i * (y + 1) + j + 1].addSpring(new Spring(1, stiffness, vertices[i * (y + 1) + j + 1], vertices[i * (y + 1) + j]));
                 }
@@ -81,7 +87,7 @@ public class Trampoline : Mesh
         }
     }
 
-    void OnDrawGizmosSelected()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         for (int i = 0; i < structuralSprings.Count; i++)

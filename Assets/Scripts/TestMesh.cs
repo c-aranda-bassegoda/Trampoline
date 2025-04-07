@@ -7,7 +7,7 @@ public class TestMesh : Mesh
     List<Spring> structuralSprings;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+    /*
     protected override void Start()
     {
         structuralSprings = new List<Spring>();
@@ -21,4 +21,5 @@ public class TestMesh : Mesh
         structuralSprings.Add(spring);
 
     }
+    */
 }
