@@ -44,7 +44,7 @@ public class Manager : MonoBehaviour
                 vert.updatePosition();
                 vert.accumulatedForce = Vector3.zero;
             }
-            mesh.updateVertices();
+            mesh.updateVertices();           
         }
         
     }
@@ -84,13 +84,6 @@ public class Manager : MonoBehaviour
         GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
         plane.transform.position = spawn_trampoline.position;
         Trampoline trampoline = plane.AddComponent<Trampoline>();
-        Meshes.Add(trampoline);
-    }
-    public void createSphere()
-    {
-        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sphere.transform.position = spawn_trampoline.position;
-        Trampoline trampoline = sphere.AddComponent<Trampoline>();
         Meshes.Add(trampoline);
     }
 }

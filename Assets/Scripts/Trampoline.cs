@@ -28,7 +28,11 @@ public class Trampoline : Mesh
     }
 
 
-
+    public override void updateVertices()
+    {
+        Debug.Log("updateVertices trampoline");
+        base.updateVertices();
+    }
     void createSprings()
     {
         Vector3 dims = mesh.bounds.size;
@@ -74,14 +78,14 @@ public class Trampoline : Mesh
                 }
                 if (j < x && i < y)
                 {
-                    spring = new Spring(1.41f, stiffness, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + x + 2]);
+                    spring = new Spring(1.41f, 100, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + x + 2]);
                     shearSprings.Add(spring);
                     vertices[i * (y + 1) + j].addSpring(spring);
-                    vertices[i * (y + 1) + j + x + 2].addSpring(new Spring(1.41f, stiffness, vertices[i * (y + 1) + j + x + 2], vertices[i * (y + 1) + j]));
-                    spring = new Spring(1.41f, stiffness, vertices[i * (y + 1) + j + x + 1], vertices[i * (y + 1) + j + 1]);
+                    vertices[i * (y + 1) + j + x + 2].addSpring(new Spring(1.41f, 100, vertices[i * (y + 1) + j + x + 2], vertices[i * (y + 1) + j]));
+                    spring = new Spring(1.41f, 100, vertices[i * (y + 1) + j + x + 1], vertices[i * (y + 1) + j + 1]);
                     shearSprings.Add(spring);
                     vertices[i * (y + 1) + j + x + 1].addSpring(spring);
-                    vertices[i * (y + 1) + j + 1].addSpring(new Spring(1.41f, stiffness, vertices[i * (y + 1) + j + 1], vertices[i * (y + 1) + j + x + 1]));
+                    vertices[i * (y + 1) + j + 1].addSpring(new Spring(1.41f, 100, vertices[i * (y + 1) + j + 1], vertices[i * (y + 1) + j + x + 1]));
                 }
             }
         }

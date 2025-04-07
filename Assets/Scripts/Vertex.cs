@@ -54,8 +54,12 @@ public class Vertex : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("trigger enter vertex");
-        //Vector3 pushDirection = (transform.position - other.transform.position).normalized;
-        //transform.position += pushDirection * velocity.magnitude * Time.deltaTime;
+        Vector3 pushDirection = (transform.position - other.transform.position).normalized;
+        transform.position += pushDirection * velocity.magnitude * Time.deltaTime;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        
     }
     private void OnTriggerStay(Collider other)
     {

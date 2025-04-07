@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System.Security;
 
 
 
@@ -17,14 +18,15 @@ public class Mesh : MonoBehaviour
     {
         mesh = GetComponent<MeshFilter>().mesh;
         //mesh.Clear();
-        List<Vector3> VertexList = new List<Vector3>(GetComponent<MeshFilter>().sharedMesh.vertices);
+        List<Vector3> VertexList = new List<Vector3>(GetComponent<MeshFilter>().mesh.vertices);
         vertices = new Vertex[VertexList.Count];
         for (int i = 0; i < VertexList.Count; i++)
         {
+            Debug.Log("Vertex: " + i + ": " + VertexList[i]);
             GameObject obj = new GameObject();
             Vertex vertexScript = obj.AddComponent<Vertex>();
             vertexScript.mass = 1f;
-            vertexScript.transform.position = transform.TransformPoint(VertexList[i]);
+            vertexScript.transform.position = VertexList[i];
             vertices[i] = vertexScript;
             vertexScript.enabled = true;
         }
@@ -36,12 +38,20 @@ public class Mesh : MonoBehaviour
     }
     public virtual void updateVertices()
     {
+        Debug.Log("in updateVertices");
         Vector3[] new_vertices = new Vector3[vertices.Length];
         for (int i = 0; i < vertices.Length; i++)
         {
+            Debug.Log("position in updateVertices: " + vertices[i].position);
             new_vertices[i] = vertices[i].position;
         }
         mesh.vertices = new_vertices;
+
+        Vector3[] list = mesh.vertices;
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            Debug.Log("position after mesh: " + list[i]);
+        }
     }
 
     public Vertex[] getVertices()
