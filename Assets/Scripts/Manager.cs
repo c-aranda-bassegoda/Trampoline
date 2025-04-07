@@ -14,17 +14,23 @@ using System.Collections;
 
 public class Manager : MonoBehaviour
 {
-    public Vector3 gravity = new Vector3(0f, 9.81f, 0f);
+    private Vector3 gravity =  new Vector3(0f, -9.81f, 0f);
     public float damping_coef = 0.05f;
+
+    // Debug
+    float time = 0f;
+    // SpawnPoint Trampoline
+    public Transform spawn_trampoline;
 
     // List of all Meshes
     public List<Mesh> Meshes = new List<Mesh>();
     //Mesh trampoline;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-                
+        createTrampoline();
     }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -36,6 +42,7 @@ public class Manager : MonoBehaviour
                 vert.updateVelocity();
                 vert.updatePosition();
             }
+            mesh.updateVertices();
         }
         
     }
@@ -66,10 +73,11 @@ public class Manager : MonoBehaviour
             vert.accumulatedForce += value * mult;
         }   
     }   
-    public void createTrampoline(int size, Transform position)
+    public void createTrampoline()
     {
-        // ToDo
         GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        
+        plane.transform.position = spawn_trampoline.position;
+        Trampoline trampoline = plane.AddComponent<Trampoline>();
+        Meshes.Add(trampoline);
     } 
 }

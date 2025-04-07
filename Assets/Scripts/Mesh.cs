@@ -12,23 +12,31 @@ public class Mesh : MonoBehaviour
     protected List<int> boundry = new List<int>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    private void Awake()
+
+    protected virtual void Start()
     {
         mesh = GetComponent<MeshFilter>().mesh;
+        //mesh.Clear();
         List<Vector3> VertexList = new List<Vector3>(GetComponent<MeshFilter>().sharedMesh.vertices);
         vertices = new Vertex[VertexList.Count];
         for (int i = 0; i < VertexList.Count; i++)
         {
-            vertices[i] = new Vertex(5, transform.TransformPoint(VertexList[i]));
+            vertices[i] = new Vertex(5f, transform.TransformPoint(VertexList[i]));
         }
 
         defineBoundry();
         defineCorners();
 
-        fixBoundry();
+        fixCorners();
     }
-    void Start()
+    public void updateVertices()
     {
+        Vector3[] new_vertices = new Vector3[vertices.Length];
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            new_vertices[i] = vertices[i].position;
+        }
+        mesh.vertices = new_vertices;
     }
 
     public Vertex[] getVertices()
@@ -88,6 +96,13 @@ public class Mesh : MonoBehaviour
         }
     }
 
+    public void fixCorners()
+    {
+        for (int i = 0; i < corners.Count-2; i++)
+        {
+            vertices[corners[i]].isFixed = true;
+        }
+    }
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -97,9 +112,4 @@ public class Mesh : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
