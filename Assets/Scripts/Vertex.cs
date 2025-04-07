@@ -37,7 +37,7 @@ public class Vertex
     public void updateVelocity()
     {
         float invMass = 1f / mass;
-        _velocity += accumulatedForce * Time.deltaTime * invMass;
-        accumulatedForce = Vector3.zero;
+        _velocity += _accumulatedForce * Time.deltaTime * invMass;
+        _accumulatedForce = Vector3.zero;
     }
 }

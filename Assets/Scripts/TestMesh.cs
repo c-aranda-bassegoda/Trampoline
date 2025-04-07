@@ -10,12 +10,15 @@ public class TestMesh : Mesh
 
     protected override void Start()
     {
-
         structuralSprings = new List<Spring>();
         vertices = new Vertex[2];
         vertices[0] = new Vertex(5f, transform.TransformPoint(new Vector3(0f,0f,0f)));
         vertices[1] = new Vertex(5f, transform.TransformPoint(new Vector3(0f, -2f, 0f)));
         vertices[0].isFixed = true;
+
+        Spring spring = new Spring(1, stiffness, vertices[0], vertices[1]);
+        vertices[0].addSpring(spring);
+        structuralSprings.Add(spring);
 
     }
 }

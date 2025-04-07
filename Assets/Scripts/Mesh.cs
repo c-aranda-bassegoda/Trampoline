@@ -21,7 +21,7 @@ public class Mesh : MonoBehaviour
         vertices = new Vertex[VertexList.Count];
         for (int i = 0; i < VertexList.Count; i++)
         {
-            vertices[i] = new Vertex(5f, transform.TransformPoint(VertexList[i]));
+            vertices[i] = new Vertex(1f, transform.TransformPoint(VertexList[i]));
         }
 
         defineBoundry();
@@ -98,7 +98,7 @@ public class Mesh : MonoBehaviour
 
     public void fixCorners()
     {
-        for (int i = 0; i < corners.Count-2; i++)
+        for (int i = 0; i < corners.Count; i++)
         {
             vertices[corners[i]].isFixed = true;
         }

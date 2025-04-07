@@ -15,7 +15,7 @@ using System.Collections;
 public class Manager : MonoBehaviour
 {
     private Vector3 gravity =  new Vector3(0f, -9.81f, 0f);
-    public float damping_coef = 0.05f;
+    private float damping_coef = 5f;
 
     // Debug
     float time = 0f;
@@ -42,6 +42,7 @@ public class Manager : MonoBehaviour
                 applyForces(vert);
                 vert.updateVelocity();
                 vert.updatePosition();
+                vert.accumulatedForce = Vector3.zero;
             }
             mesh.updateVertices();
         }
@@ -49,9 +50,9 @@ public class Manager : MonoBehaviour
     }
     public void applyForces(Vertex vert)
     {
+        applySpring(vert);
         applyGravity(vert);
         applyDamping(vert);
-        applySpring(vert);
     }
 
     // Force Functions

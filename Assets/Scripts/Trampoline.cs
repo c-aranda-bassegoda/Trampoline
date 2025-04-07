@@ -9,7 +9,7 @@ public class Trampoline : Mesh
     List<Spring> shearSprings;
     List<Spring> bendingSprings;
     List<Spring> structuralSprings;
-    public float stiffness = 50f;
+    public float stiffness = 100f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
