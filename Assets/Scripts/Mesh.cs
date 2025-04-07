@@ -29,7 +29,7 @@ public class Mesh : MonoBehaviour
 
         fixCorners();
     }
-    public void updateVertices()
+    public virtual void updateVertices()
     {
         Vector3[] new_vertices = new Vector3[vertices.Length];
         for (int i = 0; i < vertices.Length; i++)

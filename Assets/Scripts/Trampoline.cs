@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 //  (done) look into spring systems: shear, bending, structural springs
 public class Trampoline : Mesh
@@ -42,39 +43,39 @@ public class Trampoline : Mesh
                     spring = new Spring(1, stiffness, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + 1]);
                     structuralSprings.Add(spring); // for debuging
                     vertices[i * (y + 1) + j].addSpring(spring);
-                    vertices[i * (y + 1) + j + 1].addSpring(spring);
+                    vertices[i * (y + 1) + j + 1].addSpring(new Spring(1, stiffness, vertices[i * (y + 1) + j + 1], vertices[i * (y + 1) + j]));
                 }
-                if (j < x - 1)
+                if (j<x - 1)
                 {
-                    spring = new Spring(2, stiffness,vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + 2]);
+                    spring = new Spring(2, stiffness, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + 2]);
                     bendingSprings.Add(spring);
                     vertices[i * (y + 1) + j].addSpring(spring);
-                    vertices[i * (y + 1) + j + 2].addSpring(spring);
+                    vertices[i * (y + 1) + j + 2].addSpring(new Spring(2, stiffness, vertices[i * (y + 1) + j + 2], vertices[i * (y + 1) + j]));
                 }
                 if (i < y)
                 {
                     spring = new Spring(1, stiffness, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + x + 1]);
                     structuralSprings.Add(spring);
                     vertices[i * (y + 1) + j].addSpring(spring);
-                    vertices[i * (y + 1) + j + x + 1].addSpring(spring);
+                    vertices[i * (y + 1) + j + x + 1].addSpring(new Spring(1, stiffness, vertices[i * (y + 1) + j + x + 1], vertices[i * (y + 1) + j]));
                 }
                 if (i < y - 1)
                 {
                     spring = new Spring(2, stiffness, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + 2 * x + 2]);
                     bendingSprings.Add(spring);
                     vertices[i * (y + 1) + j].addSpring(spring);
-                    vertices[i * (y + 1) + j + 2 * x + 2].addSpring(spring);
+                    vertices[i * (y + 1) + j + 2 * x + 2].addSpring(new Spring(2, stiffness, vertices[i * (y + 1) + j + 2 * x + 2], vertices[i * (y + 1) + j]));
                 }
                 if (j < x && i < y)
                 {
                     spring = new Spring(1.41f, stiffness, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + x + 2]);
                     shearSprings.Add(spring);
                     vertices[i * (y + 1) + j].addSpring(spring);
-                    vertices[i * (y + 1) + j + x + 2].addSpring(spring);
+                    vertices[i * (y + 1) + j + x + 2].addSpring(new Spring(1.41f, stiffness, vertices[i * (y + 1) + j + x + 2], vertices[i * (y + 1) + j]));
                     spring = new Spring(1.41f, stiffness, vertices[i * (y + 1) + j + x + 1], vertices[i * (y + 1) + j + 1]);
                     shearSprings.Add(spring);
                     vertices[i * (y + 1) + j + x + 1].addSpring(spring);
-                    vertices[i * (y + 1) + j + 1].addSpring(spring);
+                    vertices[i * (y + 1) + j + 1].addSpring(new Spring(1.41f, stiffness, vertices[i * (y + 1) + j + 1], vertices[i * (y + 1) + j + x + 1]));
                 }
             }
         }

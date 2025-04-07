@@ -29,6 +29,7 @@ public class Manager : MonoBehaviour
     private void Awake()
     {
         createTrampoline();
+        //createSphere();
     }
 
     // Update is called once per frame
@@ -79,5 +80,12 @@ public class Manager : MonoBehaviour
         plane.transform.position = spawn_trampoline.position;
         Trampoline trampoline = plane.AddComponent<Trampoline>();
         Meshes.Add(trampoline);
-    } 
+    }
+    public void createSphere()
+    {
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere.transform.position = spawn_trampoline.position;
+        Trampoline trampoline = sphere.AddComponent<Trampoline>();
+        Meshes.Add(trampoline);
+    }
 }
