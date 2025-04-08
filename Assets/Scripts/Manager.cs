@@ -15,7 +15,7 @@ using System.Collections;
 public class Manager : MonoBehaviour
 {
     private Vector3 gravity =  new Vector3(0f, -9.81f, 0f);
-    private float damping_coef = 10f;
+    private float damping_coef = 5f;
 
     // Debug
     float time = 0f;
@@ -29,7 +29,7 @@ public class Manager : MonoBehaviour
     private void Awake()
     {
         createTrampoline();
-        //createSphere();
+        createSphere();
     }
 
     // Update is called once per frame
@@ -83,7 +83,28 @@ public class Manager : MonoBehaviour
     {
         GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
         plane.transform.position = spawn_trampoline.position;
+        plane.transform.GetComponent<MeshCollider>().enabled = false;
         Trampoline trampoline = plane.AddComponent<Trampoline>();
         Meshes.Add(trampoline);
     }
+    public void createSphere()
+    {
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere.transform.position = new Vector3(spawn_trampoline.position.x, 10, spawn_trampoline.position.z);
+        sphere.transform.localScale = new Vector3(4, 4, 4);
+        Sphere test = sphere.AddComponent<Sphere>();
+
+    }
+    /*
+    public void createSphere()
+    {
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere.transform.position = new Vector3(spawn_trampoline.position.x, 5, spawn_trampoline.position.z);
+        sphere.transform.localScale = new Vector3(4, 4, 4);
+        TestMesh test = sphere.AddComponent<TestMesh>();
+        sphere.AddComponent<Rigidbody>();
+        Meshes.Add(test);
+
+    }
+    */
 }

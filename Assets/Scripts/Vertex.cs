@@ -40,7 +40,6 @@ public class Vertex : MonoBehaviour
         SphereCollider collider = gameObject.AddComponent<SphereCollider>();
         collider.isTrigger = true;
         collider.radius = 0.15f;
-
     }
 
     public void updatePosition()
@@ -55,17 +54,33 @@ public class Vertex : MonoBehaviour
     {
         Debug.Log("trigger enter vertex");
         Vector3 pushDirection = (transform.position - other.transform.position).normalized;
-        transform.position += pushDirection * velocity.magnitude * Time.deltaTime;
+        transform.position += pushDirection * 2 * Time.deltaTime;
     }
     private void OnCollisionEnter(Collision collision)
     {
-        
+        Debug.Log("collisionö");
     }
     private void OnTriggerStay(Collider other)
     {
+        Sphere comp = other.transform.gameObject.GetComponent<Sphere>();
+        Vector3 vel1 = velocity;
+        if (comp != null)
+        {
+            vel1 = (((mass - comp.mass) * velocity + 2 * comp.mass * comp.velocity) / (mass + comp.mass));
+        }
+        Vector3 vel2 = velocity;
+        if (comp != null)
+        {
+            vel2 = (((comp.mass - mass) * comp.velocity + 2 * mass * velocity) / (mass + comp.mass));
+        }
         Debug.Log("trigger stay vertex");
         Vector3 pushDirection = (transform.position - other.transform.position).normalized;
-        transform.position += pushDirection * velocity.magnitude * Time.deltaTime;
+        transform.position += pushDirection * vel1.magnitude * Time.deltaTime;
+        velocity = vel1;
+
+        Vector3 tmp = comp.transform.position - pushDirection * vel2.magnitude * Time.deltaTime;
+        comp.body.MovePosition(tmp);
+        comp.velocity = vel2;
     }
 
     public void updateVelocity()

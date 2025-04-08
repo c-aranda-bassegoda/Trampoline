@@ -16,7 +16,6 @@ public class Trampoline : Mesh
     protected override void Start()
     {
         base.Start();
-        Debug.Log("Verticees Length " + vertices.Length);
         bendingSprings = new List<Spring>();
         structuralSprings = new List<Spring>();
         shearSprings = new List<Spring>();
@@ -30,7 +29,6 @@ public class Trampoline : Mesh
 
     public override void updateVertices()
     {
-        Debug.Log("updateVertices trampoline");
         base.updateVertices();
     }
     void createSprings()
@@ -78,11 +76,11 @@ public class Trampoline : Mesh
                 }
                 if (j < x && i < y)
                 {
-                    spring = new Spring(1.41f, 100, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + x + 2]);
+                    spring = new Spring(1.41f, stiffness, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + x + 2]);
                     shearSprings.Add(spring);
                     vertices[i * (y + 1) + j].addSpring(spring);
                     vertices[i * (y + 1) + j + x + 2].addSpring(new Spring(1.41f, 100, vertices[i * (y + 1) + j + x + 2], vertices[i * (y + 1) + j]));
-                    spring = new Spring(1.41f, 100, vertices[i * (y + 1) + j + x + 1], vertices[i * (y + 1) + j + 1]);
+                    spring = new Spring(1.41f, stiffness, vertices[i * (y + 1) + j + x + 1], vertices[i * (y + 1) + j + 1]);
                     shearSprings.Add(spring);
                     vertices[i * (y + 1) + j + x + 1].addSpring(spring);
                     vertices[i * (y + 1) + j + 1].addSpring(new Spring(1.41f, 100, vertices[i * (y + 1) + j + 1], vertices[i * (y + 1) + j + x + 1]));

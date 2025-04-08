@@ -22,7 +22,6 @@ public class Mesh : MonoBehaviour
         vertices = new Vertex[VertexList.Count];
         for (int i = 0; i < VertexList.Count; i++)
         {
-            Debug.Log("Vertex: " + i + ": " + VertexList[i]);
             GameObject obj = new GameObject();
             Vertex vertexScript = obj.AddComponent<Vertex>();
             vertexScript.mass = 1f;
@@ -34,24 +33,17 @@ public class Mesh : MonoBehaviour
         defineBoundry();
         defineCorners();
 
-        fixCorners();
+        fixBoundry();
     }
     public virtual void updateVertices()
     {
-        Debug.Log("in updateVertices");
         Vector3[] new_vertices = new Vector3[vertices.Length];
         for (int i = 0; i < vertices.Length; i++)
         {
-            Debug.Log("position in updateVertices: " + vertices[i].position);
             new_vertices[i] = vertices[i].position;
         }
         mesh.vertices = new_vertices;
 
-        Vector3[] list = mesh.vertices;
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            Debug.Log("position after mesh: " + list[i]);
-        }
     }
 
     public Vertex[] getVertices()
@@ -113,7 +105,7 @@ public class Mesh : MonoBehaviour
 
     public void fixCorners()
     {
-        for (int i = 0; i < corners.Count-2; i++)
+        for (int i = 0; i < corners.Count; i++)
         {
             vertices[corners[i]].isFixed = true;
         }
