@@ -4,20 +4,18 @@ using System.Collections;
 using System.Security;
 
 
-
+// parent mesh class 
 public class Mesh : MonoBehaviour
 {
     protected UnityEngine.Mesh mesh;
     protected Vertex[] vertices;
     protected List<int> corners = new List<int>();
     protected List<int> boundry = new List<int>();
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
 
     protected virtual void Start()
     {
+        // Get the mesh and vertices 
         mesh = GetComponent<MeshFilter>().mesh;
-        //mesh.Clear();
         List<Vector3> VertexList = new List<Vector3>(GetComponent<MeshFilter>().mesh.vertices);
         vertices = new Vertex[VertexList.Count];
         for (int i = 0; i < VertexList.Count; i++)
@@ -29,7 +27,7 @@ public class Mesh : MonoBehaviour
             vertices[i] = vertexScript;
             vertexScript.enabled = true;
         }
-
+        // find the mesh boundary vertices and make them fixed
         defineBoundry();
         defineCorners();
 

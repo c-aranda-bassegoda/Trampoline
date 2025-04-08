@@ -3,36 +3,31 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
-//  (done) look into spring systems: shear, bending, structural springs
 public class Trampoline : Mesh
 {
     List<Spring> shearSprings;
     List<Spring> bendingSprings;
     List<Spring> structuralSprings;
-    public float stiffness = 100f;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+    public float stiffness = 50f;
+        
     protected override void Start()
     {
         base.Start();
+        // Initialize Spring arrays
         bendingSprings = new List<Spring>();
         structuralSprings = new List<Spring>();
         shearSprings = new List<Spring>();
 
         createSprings();
-        Collider collider = GetComponent<Collider>();
-
-
     }
-
-
     public override void updateVertices()
     {
+        // write new vertices to the mesh
         base.updateVertices();
     }
     void createSprings()
     {
+        // create all the spring connections between the vertices in the mesh to keep the cloth structure
         Vector3 dims = mesh.bounds.size;
         int x = (int)dims.x;
         int y = (int)dims.z;
@@ -45,11 +40,7 @@ public class Trampoline : Mesh
                 if (j < x)
                 {
                     spring = new Spring(1, stiffness, vertices[i * (y + 1) + j], vertices[i * (y + 1) + j + 1]);
-                    structuralSprings.Add(spring); // for debuging
-                    if (vertices[i * (y + 1) + j] == null)
-                    {
-                        Debug.Log("vertex is null");
-                    }
+                    structuralSprings.Add(spring);
                     vertices[i * (y + 1) + j].addSpring(spring);
                     vertices[i * (y + 1) + j + 1].addSpring(new Spring(1, stiffness, vertices[i * (y + 1) + j + 1], vertices[i * (y + 1) + j]));
                 }
@@ -89,6 +80,7 @@ public class Trampoline : Mesh
         }
     }
 
+    // visualization of springs
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;

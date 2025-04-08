@@ -37,32 +37,7 @@ public class Sphere : MonoBehaviour
         body.MovePosition(tmp);
         
     }
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("trigger enter sphere");
-        Vector3 pushDirection = (transform.position - other.transform.position).normalized;
-        Vector3 tmp = transform.position + pushDirection * velocity.magnitude * Time.deltaTime;
-        body.MovePosition(tmp);
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("collisionö");
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        Vertex comp = other.transform.gameObject.GetComponent<Vertex>();
-        float vel = velocity.magnitude;
-        if (comp != null)
-        {
-            vel = (((mass - comp.mass) * velocity + 2 * comp.mass * comp.velocity) / (mass + comp.mass)).magnitude;
-        }
-        Debug.Log("trigger stay sphere");
-        Vector3 pushDirection = (transform.position - other.transform.position).normalized;
-        Vector3 tmp = transform.position + pushDirection * vel * Time.deltaTime;
-        body.MovePosition(tmp);
-    }
-    */
+
 
     public void updateVelocity()
     {
